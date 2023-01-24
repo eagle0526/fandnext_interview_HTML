@@ -10,12 +10,12 @@
         label.confirmed-checkbox {
           @apply mx-auto hover:cursor-pointer;
         }
-        input[type="checkbox"] { @apply invisible w-0 m-0 p-0; }
-        input[type="checkbox"]+span {
-          @apply border border-stone-50 bg-stone-50 px-4 py-3 rounded font-normal text-base w-fit flex items-center;
+        input[type="checkbox"] { @apply invisible w-0 m-0 p-0; }        
+        input[type="checkbox"]+span {          
+          @apply border bg-stone-50 px-4 py-3 rounded font-normal text-sm sm:text-xl w-fit flex items-center;
         }
         input[type="checkbox"]+span > i {
-          @apply border border-stone-200 bg-white rounded text-white mr-2;
+          @apply border border-stone-200 bg-white rounded mr-2;   
           width: 17.5px;
           height: 17.5px;
         }
@@ -29,24 +29,79 @@
         .btn-disabled {
           @apply text-stone-500 border border-stone-200 bg-stone-50 shadow-none;
         }
+
+        .btn-enabled {
+          @apply bg-slate-700 text-white;
+        }
+
+        .checked {
+          @apply border border-blue-700 text-blue-700;
+        }
+
+        .unchecked {
+          @apply border-stone-50 text-stone-500;
+        }
+
       }
     </style>
   </head>
-  <body>
+  
     <div class="flex flex-col items-centerm mt-12">
       <label class="confirmed-checkbox" for="confirmed_checkbox">
         <input type="checkbox" name="confirmed_checkbox" id="confirmed_checkbox" value="1">
-        <span>
-          <i class="fas fa-check-square"></i>
+        <span class="">
+          <i class="fas fa-check-square text-white"></i>
           <div class="ml-2">confirm</div>
-        </span>
+        </span>        
+        <div class="mt-2 text-center text-red-500" id="err_msg">check checkbox</div>
       </label>
+      
+
     </div>
-    <button class="mx-auto flex btn btn-disabled mt-8" id="confirm_btn">create</button>
+    <button class="mx-auto flex btn btn-disabled mt-8 hover:bg-slate-700 hover:text-white" id="confirm_btn">
+      create
+    </button>
+
+
 
     <script>
       document.getElementById("confirm_btn").addEventListener("click", function() {
         alert("welcome to fandnext");
+
+      })
+
+      let state = false
+      const checkbox = document.querySelector("#confirmed_checkbox")      
+      const box = document.querySelector("input[type='checkbox']+span")
+      const icon = document.querySelector("input[type='checkbox']+span > i")
+      const button = document.querySelector("#confirm_btn")
+      const errMsg = document.querySelector("#err_msg")
+
+      checkbox.addEventListener("click", () => {
+        if (state) {                    
+          box.classList.remove("checked")
+          box.classList.add("unchecked")        
+          button.classList.add("btn-disabled")
+          button.classList.remove("btn-enabled")
+          
+          icon.classList.add("text-white")
+          icon.classList.remove("text-blue-700")
+          
+          errMsg.classList.remove("hidden")
+
+        } else {          
+          box.classList.remove("unchecked")
+          box.classList.add("checked") 
+          button.classList.add("btn-enabled")
+          button.classList.remove("btn-disabled")
+          
+          icon.classList.remove("text-white")
+          icon.classList.add("text-blue-700")
+
+          errMsg.classList.add("hidden")
+        }
+        state = !state
+        
       })
     </script>
   </body>
